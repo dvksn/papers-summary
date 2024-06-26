@@ -16,6 +16,8 @@ That's it for the uber level architecture overview! Now, let's dive into details
 It's a weighted sum of values with weight calculated as the compatibility between keys and queries.
 ### Scaled dot product attention
 ![image](https://github.com/dvksn/papers-summary/assets/18422658/7863cc10-decd-48ae-830a-b6f5e031c178)
+#### Why not additive attention?
+Additive attention calculated using single hidden layer Feed forward network. In practice scaled dot product attention is faster due to matrix multiplications.
+For large values of dk, additive attention outperforms dot product attention. Since dot products grows with larger dk, pushing softmax into regions where it has small gradients. That's dot product attention is scaled down by sqrt(dk).
 
-
-
+#### Multi-head attention
