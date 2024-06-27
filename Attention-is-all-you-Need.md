@@ -20,4 +20,26 @@ It's a weighted sum of values with weight calculated as the compatibility betwee
 Additive attention calculated using single hidden layer Feed forward network. In practice scaled dot product attention is faster due to matrix multiplications.
 For large values of dk, additive attention outperforms dot product attention. Since dot products grows with larger dk, pushing softmax into regions where it has small gradients. That's dot product attention is scaled down by sqrt(dk).
 
-#### Multi-head attention
+### Multi-head attention
+Instead of performing single attention function, authors first projects query, key, value in dk, dk and dv dimension respectively. Attention operation is done on multiple heads in parallel and final output is concatenated. This helps in learning features from the input just like convolution operation where multiple filters are learned.
+MultiHead(Q, K, V ) = Concat(head1, ..., headh)WO
+
+## Position-wise Feed forward network
+Each encoder/decoder layer contains a feed forward network.
+FFN(x) = max(0, xW1 + b1)W2 + b2
+This is where most of the computation happens as the size of the weight matrix is usually large as compared to dmodel. (dff = 2048, dmodel = 512)
+
+## Embeddings and softmax
+The input embedding layer of encoder, input embedding layer of decoder and the output linear transformation layer shares the same weight matrix.
+In the two embedding layers, weights are multiplied by sqrt(dk).
+
+## Positional Encoding
+A sinusoidal is used to get the positional encodings. This adds the position information of each token.
+
+## Regularization
+1. Layer Norm
+2. Dropout
+3. Label Smoothing: To reduce the overconfidence in predictions. It can hurt perplexity.
+
+
+
